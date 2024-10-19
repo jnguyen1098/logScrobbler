@@ -1,7 +1,18 @@
 # log-scrobbler
 
-Run `install_24.sh` which should check for `yarn`, `python2`, and `node` 18 before
-running `yarn install`. Good luck from that point on.
+## Docker Installation
+- `cd` into this repo
+- `docker build -t logscrobbler .`
+- `docker run -p 8080:8080 logscrobbler`
+- Visit `localhost:8080`
+
+## Manual Installation
+- Run `install_24.sh` which should check for `yarn`, `python2`, and `node` 18
+- Run `yarn install`
+- Run `yarn serve`
+- Visit `localhost:8080`
+
+OLD README BELOW
 
 ## Project setup
 ```
