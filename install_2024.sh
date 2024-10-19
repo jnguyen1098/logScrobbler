@@ -24,3 +24,5 @@ rm -rf node_modules
 yarn cache clean
 yarn install
 
+echo 'Now run `yarn serve` and then open up `localhost:8080`. It wont look like the live site, because I stripped the css'
+
