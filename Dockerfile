@@ -7,13 +7,9 @@ WORKDIR /usr/src/app
 # Copy package.json and yarn.lock to the working directory
 COPY package.json yarn.lock ./
 
-# Install Yarn globally
-RUN npm install -g yarn
-
 # Install Python 2 (required by node-gyp)
 RUN apt-get update && \
     apt-get install -y python2 && \
-    ln -s /usr/bin/python2 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Node modules
