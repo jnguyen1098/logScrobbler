@@ -1,5 +1,8 @@
 # log-scrobbler
 
+Run `install_24.sh` which should check for `yarn`, `python2`, and `node` 18 before
+running `yarn install`. Good luck from that point on.
+
 ## Project setup
 ```
 yarn install

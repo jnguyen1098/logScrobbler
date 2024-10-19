@@ -1,36 +1,38 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Start from "@/views/Start";
+import { createRouter, createWebHistory } from 'vue-router';
+import Start from '@/views/Start';
 import Logged from '@/views/Logged';
 
-Vue.use(Router)
-
-const router = new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'start',
-      component: Start
-    },
-    {
-      path: '/logged',
-      name: 'logged',
-      component: Logged,
-      meta: {
-        requiresSession: true
-      }
+const routes = [
+  {
+    path: '/',
+    name: 'start',
+    component: Start
+  },
+  {
+    path: '/logged',
+    name: 'logged',
+    component: Logged,
+    meta: {
+      requiresSession: true
     }
-  ]
-})
+  }
+];
 
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+// Navigation guards
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresSession) && !localStorage.getItem('session')) {
-    next({ name: 'start' })
+    next({ name: 'start' });
   } else if (to.name === 'start' && localStorage.getItem('session')) {
-    next({ name: 'logged' })
+    next({ name: 'logged' });
   } else {
-    next()
+    next();
   }
-})
+});
 
 export default router;
+

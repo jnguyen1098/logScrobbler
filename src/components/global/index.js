@@ -1,34 +1,32 @@
-import Vue from 'vue'
-import upperFirst from 'lodash/upperFirst'
-import camelCase from 'lodash/camelCase'
+import { defineAsyncComponent } from 'vue';
+import upperFirst from 'lodash/upperFirst';
+import camelCase from 'lodash/camelCase';
 
-const requireComponent = require.context(
-    // The relative path of the components folder
-    '.',
-    // Whether or not to look in subfolders
-    true,
-    // The regular expression used to match base component filenames
-    /[A-Za-z]\w+\.(vue|js)$/
-)
+// This function takes an app instance and registers all global components
+export default function registerGlobalComponents(app) {
+  const requireComponent = require.context(
+    '.', // The relative path of the components folder
+    true, // Whether or not to look in subfolders
+    /[A-Za-z]\w+\.(vue|js)$/ // The regular expression used to match base component filenames
+  );
 
-requireComponent.keys().forEach(fileName => {
+  requireComponent.keys().forEach(fileName => {
     // Get component config
-    const componentConfig = requireComponent(fileName)
+    const componentConfig = requireComponent(fileName);
 
     // Get PascalCase name of component
     const componentName = upperFirst(
-        camelCase(
-            // Strip the leading `./` and extension from the filename
-            fileName.replace(/^\.\/(.*)\.\w+$/, '$1')
-        )
-    )
+      camelCase(
+        // Strip the leading `./` and extension from the filename
+        fileName.replace(/^\.\/(.*)\.\w+$/, '$1')
+      )
+    );
 
-    // Register component globally
-    Vue.component(
-        componentName,
-        // Look for the component options on `.default`, which will
-        // exist if the component was exported with `export default`,
-        // otherwise fall back to module's root.
-        componentConfig.default || componentConfig
-    )
-})
+    // Register component globally using the app instance
+    app.component(
+      componentName,
+      componentConfig.default || componentConfig
+    );
+  });
+}
+
